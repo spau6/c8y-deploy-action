@@ -1,0 +1,30 @@
+name: "C8Y Application Deployment"
+description: "To deploy the applications to C8Y"
+inputs:
+  TYPE:
+    required: true
+    description: "Type of deployment"
+  PACKAGE_LOCATION:
+    required: true
+    description: "Location of the binary"
+  TENANT_URL:
+    required: true
+    description: "Base URL of the tenant"
+  AUTHORIZATION_CODE:
+    required: true
+    description: "Base64 format basic authorization code"
+  APPLICATION_NAME:
+    required: true
+    description: "Name of the application to deploy in C8Y"
+  CONTEXT_PATH:
+    required: true
+    description: "Context path for the deployed application"
+  DELETE_EXISTING:
+    required: false
+    description: "Indicate whether to delete existing application"
+    default: "false"
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/deploy.sh "${{ inputs.TYPE }}" "${{ inputs.PACKAGE_LOCATION }}" "${{ inputs.TENANT_URL }}" "${{ inputs.AUTHORIZATION_CODE }}" "${{ inputs.APPLICATION_NAME }}" "${{ inputs.CONTEXT_PATH }}" "${{ inputs.DELETE_EXISTING }}"
+      shell: bash
